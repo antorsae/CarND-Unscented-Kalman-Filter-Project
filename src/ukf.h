@@ -9,12 +9,14 @@
 #include <cmath>
 #include "tools.h"
 
-
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 class UKF {
+  
 public:
+  
+  const double UKF_EPSILON = 0.001;
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -66,17 +68,20 @@ public:
 
   ///* Augmented state dimension
   int n_aug_;
+  
+  ///* Number of sigma points
+  int n_sigma_points_;
 
   ///* Sigma point spreading parameter
   double lambda_;
   
-  ///* the current NIS for radar
+  ///* the current NIS for radar / laser
   double NIS_radar_;
-  
-  ///* the current NIS for laser
   double NIS_laser_;
 
-
+  // measurement covariance matrix radar/laser
+  MatrixXd R_radar_;
+  MatrixXd R_laser_;
 
   /**
    * Constructor
